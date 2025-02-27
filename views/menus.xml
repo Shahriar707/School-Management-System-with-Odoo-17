@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <menuitem id="school_management_menu" name="School Management" sequence="10"/>
+
+    <menuitem id="school_management_student_menu" name="Student" parent="school_management_menu"
+              action="school_management_student_action" sequence="10"/>
+
+    <menuitem id="menu_student_excel_report_wizard" name="Student Reports" parent="school_management_menu"
+              action="student_excel_report_wizard_action" sequence="15"/>
+
+    <menuitem id="school_management_teacher_menu" name="Teacher" parent="school_management_menu"
+              action="school_management_teacher_action" sequence="20"/>
+
+    <menuitem id="school_management_result_menu" name="Result" parent="school_management_menu"
+              action="school_management_result_action" sequence="25"/>
+
+    <menuitem id="school_management_course_menu" name="Course" parent="school_management_menu"
+              action="school_management_course_action" sequence="30"/>
+
+    <menuitem id="school_management_school_menu" name="School" parent="school_management_menu"
+              action="school_management_school_action" sequence="35"/>
+
+    <menuitem id="school_management_parent_menu" name="Parent" parent="school_management_menu"
+              action="school_management_parent_action" sequence="40"/>
+
+    <menuitem id="school_management_setting_menu" name="Setting" parent="school_management_menu"
+                action="school_management_setting_action" sequence="45"/>
+</odoo>

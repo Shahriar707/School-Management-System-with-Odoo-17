@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+        <!-- Result for Student 1 -->
+        <record id="result_1" model="school_management.result">
+            <field name="student_id" ref="student_1"/>
+            <field name="course_id" ref="course_1"/>
+            <field name="grade">b+</field>
+            <field name="marks">72</field>
+            <field name="result_date">2024-06-30</field>
+        </record>
+
+        <!-- Result for Student 2 -->
+        <record id="result_2" model="school_management.result">
+            <field name="student_id" ref="student_2"/>
+            <field name="course_id" ref="course_1"/>
+            <field name="grade">a+</field>
+            <field name="marks">97</field>
+            <field name="result_date">2024-06-30</field>
+        </record>
+
+        <!-- Result for Student 3 -->
+        <record id="result_3" model="school_management.result">
+            <field name="student_id" ref="student_3"/>
+            <field name="course_id" ref="course_1"/>
+            <field name="grade">a</field>
+            <field name="marks">91</field>
+            <field name="result_date">2024-06-30</field>
+        </record>
+
+         Result for Student 4
+        <record id="result_4" model="school_management.result">
+            <field name="student_id" ref="student_4"/>
+            <field name="course_id" ref="course_1"/>
+            <field name="grade">b-</field>
+            <field name="marks">79</field>
+            <field name="result_date">2024-06-30</field>
+        </record>
+
+        <!-- Result for Student 5 -->
+        <record id="result_5" model="school_management.result">
+            <field name="student_id" ref="student_5"/>
+            <field name="course_id" ref="course_1"/>
+            <field name="grade">a</field>
+            <field name="marks">92</field>
+            <field name="result_date">2024-06-30</field>
+        </record>
+
+        <!-- Result for Student 6 -->
+        <record id="result_6" model="school_management.result">
+            <field name="student_id" ref="student_6"/>
+            <field name="course_id" ref="course_1"/>
+            <field name="grade">a+</field>
+            <field name="marks">98</field>
+            <field name="result_date">2024-06-30</field>
+        </record>
+
+        <!-- Result for Student 7 -->
+        <record id="result_7" model="school_management.result">
+            <field name="student_id" ref="student_7"/>
+            <field name="course_id" ref="course_1"/>
+            <field name="grade">b</field>
+            <field name="marks">80</field>
+            <field name="result_date">2024-06-30</field>
+        </record>
+
+        <!-- Result for Student 8 -->
+        <record id="result_8" model="school_management.result">
+            <field name="student_id" ref="student_8"/>
+            <field name="course_id" ref="course_1"/>
+            <field name="grade">b+</field>
+            <field name="marks">85</field>
+            <field name="result_date">2024-06-30</field>
+        </record>
+
+        <!-- Result for Student 9 -->
+        <record id="result_9" model="school_management.result">
+            <field name="student_id" ref="student_9"/>
+            <field name="course_id" ref="course_1"/>
+            <field name="grade">a+</field>
+            <field name="marks">70</field>
+            <field name="result_date">2024-06-30</field>
+        </record>
+
+        <!-- Result for Student 10 -->
+        <record id="result_10" model="school_management.result">
+            <field name="student_id" ref="student_10"/>
+            <field name="course_id" ref="course_1"/>
+            <field name="grade">a</field>
+            <field name="marks">92</field>
+            <field name="result_date">2024-06-30</field>
+        </record>
+
+        <!-- Result for Student 11 -->
+        <record id="result_11" model="school_management.result">
+            <field name="student_id" ref="student_11"/>
+            <field name="course_id" ref="course_1"/>
+            <field name="grade">b+</field>
+            <field name="marks">84</field>
+            <field name="result_date">2024-06-30</field>
+        </record>
+
+        <!-- Result for Student 12 -->
+        <record id="result_12" model="school_management.result">
+            <field name="student_id" ref="student_12"/>
+            <field name="course_id" ref="course_1"/>
+            <field name="grade">b</field>
+            <field name="marks">76</field>
+            <field name="result_date">2024-06-30</field>
+        </record>
+
+        <!-- Result for Student 13 -->
+        <record id="result_13" model="school_management.result">
+            <field name="student_id" ref="student_13"/>
+            <field name="course_id" ref="course_1"/>
+            <field name="grade">a-</field>
+            <field name="marks">88</field>
+            <field name="result_date">2024-06-30</field>
+        </record>
+
+        <!-- Result for Student 14 -->
+        <record id="result_14" model="school_management.result">
+            <field name="student_id" ref="student_14"/>
+            <field name="course_id" ref="course_1"/>
+            <field name="grade">b</field>
+            <field name="marks">79</field>
+            <field name="result_date">2024-06-30</field>
+        </record>
+
+        <!-- Result for Student 15 -->
+        <record id="result_15" model="school_management.result">
+            <field name="student_id" ref="student_15"/>
+            <field name="course_id" ref="course_1"/>
+            <field name="grade">a</field>
+            <field name="marks">92</field>
+            <field name="result_date">2024-06-30</field>
+        </record>
+
+</odoo>

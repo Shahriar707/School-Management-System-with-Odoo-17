@@ -1,0 +1,37 @@
+<odoo>
+    <!-- Course Records -->
+    <record id="course_1" model="school_management.course">
+        <field name="name">Bangla</field>
+        <field name="code">bangla101</field>
+        <field name="standard">10</field>
+        <field name="student_ids" eval="[(4, ref('school_management.student_16')), (4, ref('school_management.student_17'))]"/>
+    </record>
+
+    <record id="course_2" model="school_management.course">
+        <field name="name">English</field>
+        <field name="code">english101</field>
+        <field name="standard">9</field>
+        <field name="student_ids" eval="[(4, ref('school_management.student_18')), (4, ref('school_management.student_19'))]"/>
+    </record>
+
+    <record id="course_3" model="school_management.course">
+        <field name="name">Math</field>
+        <field name="code">math101</field>
+        <field name="standard">10</field>
+        <field name="student_ids" eval="[(4, ref('school_management.student_20')), (4, ref('school_management.student_21'))]"/>
+    </record>
+
+    <record id="course_4" model="school_management.course">
+        <field name="name">Science</field>
+        <field name="code">science101</field>
+        <field name="standard">9</field>
+        <field name="student_ids" eval="[(4, ref('school_management.student_22')), (4, ref('school_management.student_23'))]"/>
+    </record>
+
+    <record id="course_5" model="school_management.course">
+        <field name="name">Social Science</field>
+        <field name="code">social101</field>
+        <field name="standard">10</field>
+        <field name="student_ids" eval="[(4, ref('school_management.student_24')), (4, ref('school_management.student_25'))]"/>
+    </record>
+</odoo>

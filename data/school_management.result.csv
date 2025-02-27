@@ -1,0 +1,16 @@
+id,student_id,course_id,grade,marks,result_date
+1,student_1,course_1,A,95,2024-06-30
+2,student_2,course_1,B,85,2024-06-30
+3,student_3,course_1,B,75,2024-06-30
+4,student_4,course_1,A+,98,2024-06-30
+5,student_5,course_1,B+,88,2024-06-30
+6,student_6,course_1,A,92,2024-06-30
+7,student_7,course_1,B+,70,2024-06-30
+8,student_8,course_1,B,80,2024-06-30
+9,student_9,course_1,A,94,2024-06-30
+10,student_10,course_1,A-,90,2024-06-30
+11,student_11,course_2,A,93,2024-06-30
+12,student_12,course_2,B,82,2024-06-30
+13,student_13,course_2,B,78,2024-06-30
+14,student_14,course_2,B+,85,2024-06-30
+15,student_15,course_2,A-,90,2024-06-30

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <template id="student_report_template">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <div class="page" style="font-family: 'Arial', sans-serif; color: #333; background-color: #f9f9f9; padding: 30px; position: relative;">
+
+                        <div style="text-align:center; font-size:28px; font-weight:bold; margin-bottom: 30px; color: #2c3e50; border-bottom: 3px solid #3498db; padding-bottom: 10px;">
+                            <h2 style="color: #e74c3c;"><t t-esc="doc.name"/></h2>
+                            <p style="font-size: 18px; color: #95a5a6;"><strong>Student Report</strong></p>
+                        </div>
+
+                        <div style="margin-bottom: 30px; padding: 15px; border: 2px solid #3498db; border-radius: 10px; background-color: #ecf0f1;">
+                            <h3 style="font-size: 20px; font-weight: bold; color: #3498db; margin-bottom: 15px;">Student Information</h3>
+                            <table style="width: 100%; border-collapse: collapse; font-size: 16px;">
+                                <tr style="background-color: #3498db; color: white;">
+                                    <th style="padding: 10px; text-align: left;">Field</th>
+                                    <th style="padding: 10px; text-align: left;">Value</th>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 10px; background-color: #f9f9f9; color: #555; border: 1px solid #ddd;"><strong>Age</strong></td>
+                                    <td style="padding: 10px; background-color: #fff; color: #333; border: 1px solid #ddd;"><t t-esc="doc.age"/></td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 10px; background-color: #f9f9f9; color: #555; border: 1px solid #ddd;"><strong>Date of Birth</strong></td>
+                                    <td style="padding: 10px; background-color: #fff; color: #333; border: 1px solid #ddd;"><t t-esc="doc.date_of_birth"/></td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 10px; background-color: #f9f9f9; color: #555; border: 1px solid #ddd;"><strong>Roll Number</strong></td>
+                                    <td style="padding: 10px; background-color: #fff; color: #333; border: 1px solid #ddd;"><t t-esc="doc.roll_number"/></td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 10px; background-color: #f9f9f9; color: #555; border: 1px solid #ddd;"><strong>Gender</strong></td>
+                                    <td style="padding: 10px; background-color: #fff; color: #333; border: 1px solid #ddd;"><t t-esc="doc.gender"/></td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div style="margin-bottom: 30px; padding: 15px; border: 2px solid #e74c3c; border-radius: 10px; background-color: #fdfefe;">
+                            <h3 style="font-size: 20px; font-weight: bold; color: #e74c3c; margin-bottom: 15px;">Course Information</h3>
+                            <table style="width: 100%; border-collapse: collapse; font-size: 16px;">
+                                <tr style="background-color: #e74c3c; color: white;">
+                                    <th style="padding: 10px; text-align: left;">Course</th>
+                                    <th style="padding: 10px; text-align: left;">Marks</th>
+                                </tr>
+                                <t t-foreach="doc.result_ids" t-as="result">
+                                    <tr>
+                                        <td style="padding: 15px; font-size: 16px; background-color: #f3f3f3; border: 1px solid #ddd;">
+                                            <t t-esc="result.course_id.name"/>
+                                        </td>
+                                        <td style="padding: 15px; font-size: 16px; background-color: #fff; border: 1px solid #ddd;">
+                                            <t t-esc="result.marks"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </table>
+                        </div>
+
+                        <div style="text-align: center; margin-top: 20px; font-size: 14px; color: #95a5a6;">
+                            <p><em>Powered by <t t-esc="doc.school_id.name"/></em></p>
+                            <p><strong>Generated on:</strong> <t t-esc="datetime.date.today()"/></p>
+                        </div>
+                    </div>
+                </t>
+                <div class="footer" style="text-align: center; font-size: 14px; color: #555; margin-top: 20px; border-top: 1px solid #ccc;">
+                    <p>Page <span class="page"/> / <span class="topage"/></p>
+                </div>
+            </t>
+        </template>
+
+
+
+        <!-- Report Action -->
+        <record id="student_report_action" model="ir.actions.report">
+            <field name="name">Student Report</field>
+            <field name="model">school_management.student</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">school_management.student_report_template</field>
+            <field name="report_file">school_management.student_report_template</field>
+            <field name="binding_model_id" ref="school_management.model_school_management_student"/>
+            <field name="binding_type">report</field>
+        </record>
+    </data>
+</odoo>

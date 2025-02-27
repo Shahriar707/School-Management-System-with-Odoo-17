@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="school_management_course_view_form" model="ir.ui.view">
+        <field name="name">school.management.course.view.form</field>
+        <field name="model">school_management.course</field>
+        <field name="arch" type="xml">
+            <form string="Course" create="true" edit="true" duplicate="true" delete="true"
+                  disable_autofocus="true">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="standard"/>
+                        <field name="code"/>
+                    </group>
+                    <notebook>
+                        <page string="Student">
+                            <group>
+                                <field name="student_ids" domain="[('standard', '=', 'standard')]"/>
+                            </group>
+                        </page>
+                        <page string="Teacher">
+                            <group>
+                                <field name="teacher_ids"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="school_management_course_view_tree" model="ir.ui.view">
+        <field name="name">school.management.course.view.tree</field>
+        <field name="model">school_management.course</field>
+        <field name="arch" type="xml">
+            <tree string="School Courses">
+                <field name="name"/>
+                <field name="code"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="school_management_course_action" model="ir.actions.act_window">
+        <field name="name">Course</field>
+        <field name="res_model">school_management.course</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

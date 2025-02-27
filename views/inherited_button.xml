@@ -1,0 +1,25 @@
+<odoo>
+    <record id="inherited_school_management_student_view_form" model="ir.ui.view">
+        <field name="name">inherited.school.management.student.view.form</field>
+        <field name="model">school_management.student</field>
+        <field name="inherit_id" ref="school_management.school_management_student_simple_form"/>
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+            <xpath expr="//form/sheet/header" position="inside">
+                <button name="custom_function" type="object" string="Inherited Button" class="btn-secondary"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="school_management_student_inherited_action" model="ir.actions.act_window">
+        <field name="name">Inherited Student Form</field>
+        <field name="res_model">school_management.student</field>
+        <field name="view_mode">form</field>
+    </record>
+
+    <record model="ir.actions.act_window.view" id="inherited_school_management_student_action_form">
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="inherited_school_management_student_view_form"/>
+        <field name="act_window_id" ref="school_management_student_inherited_action"/>
+    </record>
+</odoo>

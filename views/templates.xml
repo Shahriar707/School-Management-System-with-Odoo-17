@@ -1,0 +1,276 @@
+<odoo>
+    <data>
+        <!--        add a new menu in portal-->
+        <template id="portal_my_school_home" inherit_id="portal.portal_my_home">
+            <xpath expr="//div[@id='portal_vendor_category']" position="inside">
+                <t t-call="portal.portal_docs_entry">
+                    <t t-set="icon" t-value="'/sale/static/src/img/bag.svg'"/>
+                    <t t-set="title">School</t>
+                    <t t-set="placeholder_count" t-value="'school_count'"/>
+                    <t t-set="text">My School</t>
+                    <t t-set="url" t-value="'/my/school'"/>
+                    <t t-set="config_card" t-value="True"/>
+                </t>
+            </xpath>
+        </template>
+
+        <template id="breadcrumb_template">
+            <nav aria-label="breadcrumb" class="mt-3">
+                <ol class="breadcrumb">
+                    <t t-foreach="breadcrumbs" t-as="crumb">
+                        <li t-if="crumb[1] != '#'" class="breadcrumb-item">
+                            <a t-att-href="crumb[1]"><t t-esc="crumb[0]"/></a>
+                        </li>
+                        <li t-if="crumb[1] == '#'" class="breadcrumb-item active" aria-current="page">
+                            <t t-esc="crumb[0]"/>
+                        </li>
+                    </t>
+                </ol>
+            </nav>
+        </template>
+
+        <template id="portal_my_home_supplier_registration_breadcrumbs" name="Portal layout : School menu breadcrumbs"
+                  inherit_id="portal.portal_breadcrumbs" priority="25">
+            <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+                <li t-if="page_name == 'my_school'" class="breadcrumb-item">School</li>
+            </xpath>
+        </template>
+
+        <template id="student_tree_view_template">
+            <t t-call="portal.portal_layout">
+                <div class="container mt-5">
+                    <!-- Page Title -->
+                    <h1 class="text-center mb-4 text-uppercase text-primary">
+                        Students of <t t-esc="school.name"/>
+                    </h1>
+
+                    <!-- Students Table -->
+                    <div class="table-responsive shadow-sm rounded bg-white p-4">
+                        <table class="table table-hover table-bordered">
+                            <thead class="bg-primary text-white text-center">
+                                <tr>
+                                    <th style="width: 20%;">Student Name</th>
+                                    <th style="width: 20%;">Email</th>
+                                    <th style="width: 15%;">Standard</th>
+                                    <th style="width: 15%;">Section</th>
+                                    <th style="width: 15%;">Weight (kg)</th>
+                                    <th style="width: 15%;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="students" t-as="student">
+                                    <tr class="align-middle text-center">
+                                        <td>
+                                            <strong><t t-esc="student.name"/></strong>
+                                        </td>
+                                        <td>
+                                            <t t-esc="student.email" class="text-muted"/>
+                                        </td>
+                                        <td>
+                                            <span class="badge bg-info text-dark">
+                                                <t t-esc="student.standard"/>
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span class="badge bg-secondary">
+                                                <t t-esc="student.section"/>
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span class="fw-bold"><t t-esc="student.weight_in_kg"/> kg</span>
+                                        </td>
+                                        <td>
+                                            <!-- Action Buttons -->
+                                            <div class="d-flex justify-content-center">
+                                                <a t-att-href="'/my/school/%s' % school.id"
+                                                   class="btn btn-primary btn-sm me-2">
+                                                    View
+                                                </a>
+                                                <button type="button" class="btn btn-warning btn-sm me-2">
+                                                    Edit
+                                                </button>
+                                                <button type="button" class="btn btn-danger btn-sm">
+                                                    Delete
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </t>
+        </template>
+
+
+        <template id="school_list_view_template">
+            <t t-call="portal.portal_layout">
+                <t t-call="school_management.breadcrumb_template"/>
+
+                <div class="container mt-5">
+                    <!-- Page Title -->
+                    <h1 class="text-center mb-4 text-uppercase text-primary">
+                        My School
+                    </h1>
+
+                    <!-- School Table -->
+                    <div class="table-responsive shadow-sm rounded bg-white p-4">
+                        <table class="table table-hover table-bordered align-middle">
+                            <thead class="bg-primary text-white text-center">
+                                <tr>
+                                    <th style="width: 20%;">Name</th>
+                                    <th style="width: 30%;">Address</th>
+                                    <th style="width: 15%;">Contact</th>
+                                    <th style="width: 20%;">Email</th>
+                                    <th style="width: 15%;">Website</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="schools" t-as="school">
+                                    <tr class="text-center">
+                                        <td>
+                                            <a t-attf-href="/my/school/#{school.id}" class="text-decoration-none fw-bold text-primary">
+                                                <t t-esc="school.name"/>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <span class="text-muted"><t t-esc="school.address"/></span>
+                                        </td>
+                                        <td>
+                                            <span class="fw-bold"><t t-esc="school.contact"/></span>
+                                        </td>
+                                        <td>
+                                            <span class="text-muted"><t t-esc="school.email"/></span>
+                                        </td>
+                                        <td>
+                                            <a t-att-href="'http://' + school.website if school.website else '#'"
+                                               target="_blank" class="text-decoration-none">
+                                                <t t-esc="school.website or 'N/A'"/>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </t>
+        </template>
+
+
+        <template id="school_details_view_portal" inherit_id="portal.portal_sidebar">
+            <xpath expr="//div[hasclass('o_portal_sidebar')]" position="inside">
+                <t t-if="page_name == 'school_details'">
+                    <t t-call="school_management.breadcrumb_template"/>
+
+                    <section style="background-color: #f9f9f9; padding-top: 40px; padding-bottom: 40px;">
+                        <div class="container">
+                            <div class="row">
+                                <!-- School Details Card -->
+                                <div class="col-lg-4">
+                                    <div class="card mb-4 shadow-sm rounded">
+                                        <div class="card-body text-center">
+                                            <!-- School Logo -->
+                                            <t t-if="school.logo">
+                                                <img t-att-src="image_data_uri(school.logo)"
+                                                     class="rounded-circle img-fluid mb-3"
+                                                     style="width: 150px; height: 150px; object-fit: cover;"/>
+                                            </t>
+                                            <t t-else="">
+                                                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
+                                                     alt="avatar"
+                                                     class="rounded-circle img-fluid mb-3"
+                                                     style="width: 150px; height: 150px; object-fit: cover;"/>
+                                            </t>
+
+                                            <!-- School Name -->
+                                            <h5 class="mb-2 text-primary"><strong><t t-esc="school.name"/></strong></h5>
+
+                                            <!-- School Email -->
+                                            <p class="text-muted mb-1">
+                                                <i class="fa fa-envelope"></i> <t t-esc="school.email"/>
+                                            </p>
+
+                                            <!-- School Website -->
+                                            <p class="text-muted mb-4">
+                                                <i class="fa fa-globe"></i> <t t-esc="school.website or 'N/A'"/>
+                                            </p>
+
+                                            <!-- Action Buttons -->
+                                            <div class="d-flex justify-content-center gap-2">
+                                                <a t-att-href="'/web#id=%s&amp;model=school_management.school&amp;view_type=form' % school.id"
+                                                   class="btn btn-primary btn-sm">Manage in Odoo</a>
+                                                <a t-att-href="'/my/school/%s/students' % school.id"
+                                                   class="btn btn-outline-primary btn-sm">View Students</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Additional Details -->
+                                <div class="col-lg-8">
+                                    <div class="card shadow-sm rounded mb-4">
+                                        <div class="card-body">
+                                            <h5 class="text-primary mb-4"><strong>School Details</strong></h5>
+
+                                            <div class="row mb-3">
+                                                <div class="col-sm-3">
+                                                    <p class="mb-0"><strong>School Name</strong></p>
+                                                </div>
+                                                <div class="col-sm-9">
+                                                    <p class="text-muted"><t t-esc="school.name"/></p>
+                                                </div>
+                                            </div>
+                                            <hr/>
+
+                                            <div class="row mb-3">
+                                                <div class="col-sm-3">
+                                                    <p class="mb-0"><strong>Email</strong></p>
+                                                </div>
+                                                <div class="col-sm-9">
+                                                    <p class="text-muted"><t t-esc="school.email"/></p>
+                                                </div>
+                                            </div>
+                                            <hr/>
+
+                                            <div class="row mb-3">
+                                                <div class="col-sm-3">
+                                                    <p class="mb-0"><strong>Website</strong></p>
+                                                </div>
+                                                <div class="col-sm-9">
+                                                    <p class="text-muted"><t t-esc="school.website or 'N/A'"/></p>
+                                                </div>
+                                            </div>
+                                            <hr/>
+
+                                            <div class="row mb-3">
+                                                <div class="col-sm-3">
+                                                    <p class="mb-0"><strong>Address</strong></p>
+                                                </div>
+                                                <div class="col-sm-9">
+                                                    <p class="text-muted"><t t-esc="school.address"/></p>
+                                                </div>
+                                            </div>
+                                            <hr/>
+
+                                            <div class="row mb-3">
+                                                <div class="col-sm-3">
+                                                    <p class="mb-0"><strong>Contact</strong></p>
+                                                </div>
+                                                <div class="col-sm-9">
+                                                    <p class="text-muted"><t t-esc="school.contact"/></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </t>
+            </xpath>
+        </template>
+
+    </data>
+</odoo>

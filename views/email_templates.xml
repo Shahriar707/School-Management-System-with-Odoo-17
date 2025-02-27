@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="student_email_template" model="mail.template">
+        <field name="name">Student Email Template</field>
+        <field name="model_id" ref="model_school_management_student"/>
+        <field name="subject">Welcome to School</field>
+        <field name="email_from">{{object.school_id.email}}</field>
+        <field name="email_to">{{object.email}}</field>
+        <field name="report_template_ids" eval="[(4, ref('school_management.student_report_action'))]"/>
+        <field name="body_html" type="html">
+            <h3>Dear Student <span t-field="object.name"/></h3>
+            <img t-attf-src="data:image/png;base64,{{object.image}}"
+            style="width:65px;height:65px;object-fit:cover;"/>
+            <p>Welcome to <span t-field="object.school_id.name"/> </p>
+            <t t-if="object.date_of_birth">
+                <p>Your Date of Birth is <span t-field="object.date_of_birth"/></p>
+            </t>
+            <t t-else="">
+                <p>Your Date of Birth is not available</p>
+            </t>
+            <p t-if="object.admission_date">Your Admission Date is <span t-field="object.admission_date"/></p>
+            <t t-foreach="object.result_ids" t-as="result">
+                <p>Subject: <span t-esc="result.course_id.name"/> - Marks: <span t-esc="result.marks"/></p>
+            </t>
+        </field>
+    </record>
+</odoo>

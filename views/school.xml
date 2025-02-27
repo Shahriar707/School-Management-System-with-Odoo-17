@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+        <record id="school_management_school_view_form" model="ir.ui.view">
+            <field name="name">school.management.school.view.form</field>
+            <field name="model">school_management.school</field>
+            <field name="arch" type="xml">
+                <form string="School" create="true" edit="true" duplicate="true" delete="true"
+                      disable_autofocus="true">
+                    <sheet>
+                        <header>
+                            <button name="print_school_report" string="Print School Report" type="object"
+                                    class="btn-primary"/>
+                        </header>
+                        <group>
+                            <field name="name"/>
+                            <field name="address"/>
+                        </group>
+
+                        <notebook>
+                            <page string="Generals">
+                                <group>
+                                    <field name="contact"/>
+                                    <field name="active"/>
+                                    <field name="email"/>
+                                    <field name="logo"/>
+                                </group>
+                            </page>
+                            <page string="Information">
+                                <group>
+                                    <field name="website"/>
+                                    <field name="established_date"/>
+                                    <field name="school_code"/>
+                                </group>
+                            </page>
+                            <page string="Students">
+                                <field name="student_ids" mode="kanban"
+                                       context="{'default_res_model': 'school_management.student', 'default_res_id': id, 'form_view_ref': 'inherited_school_management_student_view_form'}"
+                                       options="{'action': 'school_management_student_inherited_action'}">
+                                    <kanban default_order="age">
+                                        <field name="name"/>
+                                        <field name="age"/>
+                                        <templates>
+                                            <t t-name="kanban-box">
+                                                <div class="oe_kanban_global_click o_kanban_record">
+                                                    <div class="text-center">
+                                                        <strong><t t-esc="record.name.value"/></strong>
+                                                        <div class="text-muted">Age: <t t-esc="record.age.value"/></div>
+                                                    </div>
+                                                </div>
+                                            </t>
+                                        </templates>
+                                    </kanban>
+                                </field>
+                            </page>
+                            <page string="Teacher">
+                                <group>
+                                    <field name="teacher_ids"/>
+                                </group>
+                            </page>
+                            <page string="Playground">
+                                <group>
+                                    <field name="playground_ids"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="school_management_school_view_tree" model="ir.ui.view">
+            <field name="name">school.management.school.view.tree</field>
+            <field name="model">school_management.school</field>
+            <field name="arch" type="xml">
+                <tree string="School">
+                    <field name="name"/>
+                    <field name="address"/>
+                    <field name="contact"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <record id="school_management_school_action" model="ir.actions.act_window">
+            <field name="name">School</field>
+            <field name="res_model">school_management.school</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+</odoo>

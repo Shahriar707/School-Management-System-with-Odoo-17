@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="school_management_result_view_form" model="ir.ui.view">
+        <field name="name">school.management.result.view.form</field>
+        <field name="model">school_management.result</field>
+        <field name="arch" type="xml">
+            <form string="Teacher" create="true" edit="true" duplicate="true" delete="true"
+                  disable_autofocus="true">
+                <sheet>
+                    <group>
+                        <field name="student_id"/>
+                        <field name="course_id"/>
+                        <field name="grade"/>
+                        <field name="marks"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="school_management_result_view_tree" model="ir.ui.view">
+        <field name="name">school.management.result.view.tree</field>
+        <field name="model">school_management.result</field>
+        <field name="arch" type="xml">
+            <tree string="Student Result">
+                <field name="student_id" string="Student Name"/>
+                <field name="marks"/>
+                <field name="grade"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="open_create_result" model="ir.actions.act_window">
+        <field name="name">Create a Result</field>
+        <field name="res_model">school_management.result</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="school_management_result_view_form"/>
+        <field name="target">new</field>
+    </record>
+
+    <record id="school_management_result_view_kanban" model="ir.ui.view">
+        <field name="name">school.management.result.view.kanban</field>
+        <field name="model">school_management.result</field>
+        <field name="arch" type="xml">
+            <kanban default_order="result_date desc"
+                    default_group_by="course_id"
+                    archivable="false"
+                    records_draggable="false">
+                <field name="course_id"/>
+                <field name="grade"/>
+                <field name="marks"/>
+                <field name="result_date"/>
+
+                <header>
+                    <button name="action_click" string="Create a Result" type="object" display="always"/>
+                </header>
+
+                <templates>
+                    <t t-name="kanban-menu" groups="base.group_user">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-6 o_kanban_card_manage_section o_kanban_manage_view">
+                                    <h5 role="menuitem" class="o_kanban_card_manage_title">
+                                        <span>View</span>
+                                    </h5>
+                                    <div role="menuitem">
+                                        <a name="view_results" type="object">Results</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+
+                    <!-- Kanban Box -->
+                    <t t-name="kanban-box">
+                        <div class="o_kanban_card">
+                            <div class="oe_kanban_global_click" >
+                                <div class="o_kanban_details">
+                                    <strong><field name="student_id" widget="many2one" options="{'no_open': True}"/></strong>
+                                    <div>Course: <field name="course_id" widget="many2one" options="{'no_open': True}"/></div>
+                                    <div>Grade: <field name="grade"/></div>
+                                    <div>Marks: <field name="marks"/></div>
+                                    <div>Date: <field name="result_date"/></div>
+                                </div>
+
+                                <div style="margin-top: 10px;">
+                                    <a type="object" name="action_view_student" class="btn btn-link">View Student</a><br/>
+                                    <a type="object" name="action_view_course" class="btn btn-link">View Course</a><br/>
+                                    <a type="object" name="action_view_results" class="btn btn-link">View All Results</a>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+
+                    <t t-name="kanban-tooltip">
+                        <div class="o_tooltip_content">
+                            <p>Student: <t t-esc="record.student_id.value"/></p>
+                            <p>Course: <t t-esc="record.course_id.value"/></p>
+                            <p>Grade: <t t-esc="record.grade.value"/></p>
+                            <p>Marks: <t t-esc="record.marks.value"/></p>
+                            <p>Date: <t t-esc="record.result_date.value"/></p>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="school_management_result_view_calendar" model="ir.ui.view">
+        <field name="name">school.management.result.calendar</field>
+        <field name="model">school_management.result</field>
+        <field name="arch" type="xml">
+            <calendar string="Result Calendar" mode="month" color="course_id" date_start="result_date">
+                <field name="student_id"/>
+                <field name="course_id"/>
+                <field name="grade"/>
+                <field name="marks"/>
+            </calendar>
+        </field>
+    </record>
+
+    <record id="school_management_result_view_graph" model="ir.ui.view">
+        <field name="name">school.management.result.graph</field>
+        <field name="model">school_management.result</field>
+        <field name="arch" type="xml">
+            <graph string="Result Analysis" type="bar">
+                <field name="result_date" type="col" interval="month"/>
+                <field name="course_id" type="row"/>
+                <field name="marks" type="measure"/>
+                <field name="grade" type="row"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="school_management_result_view_pivot" model="ir.ui.view">
+        <field name="name">school.management.result.pivot</field>
+        <field name="model">school_management.result</field>
+        <field name="arch" type="xml">
+            <pivot string="Result Analysis" disable_linking="0" display_quantity="1">
+                <field name="result_date" type="col" interval="month"/>
+                <field name="student_id" type="row"/>
+                <field name="course_id" type="row"/>
+                <field name="marks" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="school_management_result_action" model="ir.actions.act_window">
+        <field name="name">Results</field>
+        <field name="res_model">school_management.result</field>
+        <field name="view_mode">tree,kanban,form,calendar,graph,pivot</field>
+    </record>
+</odoo>

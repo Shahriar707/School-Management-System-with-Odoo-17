@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+        <record id="school_management_teacher_view_tree" model="ir.ui.view">
+            <field name="name">school.management.teacher.view.tree</field>
+            <field name="model">school_management.teacher</field>
+            <field name="arch" type="xml">
+                <tree string="School Teacher">
+                    <field name="name"/>
+                    <field name="age"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="school_management_teacher_view_form" model="ir.ui.view">
+            <field name="name">school.management.teacher.view.form</field>
+            <field name="model">school_management.teacher</field>
+            <field name="arch" type="xml">
+                <form string="Teacher" create="true" edit="true" duplicate="true" delete="true"
+                      disable_autofocus="true">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="joining_date"/>
+                            <field name="job_age"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="school_management_teacher_action" model="ir.actions.act_window">
+            <field name="name">Teachers</field>
+            <field name="res_model">school_management.teacher</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="school_management_teacher_view_tree"/>
+        </record>
+</odoo>

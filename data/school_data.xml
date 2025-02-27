@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- School 1 -->
+        <record id="school_1" model="school_management.school">
+            <field name="name">Green Valley High School</field>
+            <field name="school_code">GVHS001</field>
+
+        </record>
+
+        <!-- School 2 -->
+        <record id="school_2" model="school_management.school">
+            <field name="name">Sunshine International School</field>
+            <field name="school_code">SIS002</field>
+
+        </record>
+
+        <!-- School 3 -->
+        <record id="school_3" model="school_management.school">
+            <field name="name">Blue Ridge Academy</field>
+            <field name="school_code">BRA003</field>
+
+        </record>
+
+        <!-- School 4 -->
+        <record id="school_4" model="school_management.school">
+            <field name="name">Silver Oak School</field>
+            <field name="school_code">SOS004</field>
+        </record>
+
+        <!-- School 5 -->
+        <record id="school_5" model="school_management.school">
+            <field name="name">Riverside High</field>
+            <field name="school_code">RH005</field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <template id="certificate_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <div class="page" style="width: 1000px; margin: auto; padding: 40px; font-family: 'Arial', sans-serif; border: 12px solid #d4af37; border-radius: 15px; background: #fff; box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); margin-top:100px;">
+                    <!-- Header Section -->
+                    <div style="text-align: center; margin-bottom: 40px;">
+                        <h1 style="font-size: 50px; font-family: 'Playfair Display', serif; color: #1f3c88; margin-bottom: 10px; font-style: italic;">Certificate of Achievement</h1>
+                        <p style="font-size: 30px; font-family: 'Roboto', sans-serif; font-weight: bold; color: #666;">Presented To</p>
+                        <h2 style="font-size: 40px; font-family: 'Playfair Display', serif; font-style: italic; color: #d4af37; margin-top: 10px;">
+                            <t t-esc="doc.student_id.name"/>
+                        </h2>
+                    </div>
+
+                    <!-- Textual Acknowledgment -->
+                    <div style="text-align: center; margin: 30px auto 50px auto; width: 80%; font-family: 'Roboto', sans-serif; color: #666;">
+                        <p style="font-size: 16px; line-height: 1.6;">
+                            This certificate is proudly presented to acknowledge the hard work and dedication shown in
+                            <span style="color: #1f3c88;"><t t-esc="doc.course_id.name"/></span> by obtaining <span style="color: #1f3c88;"><t t-esc="doc.marks"/></span>. Your commitment to achieving excellence is an inspiration to all of us.
+                            Keep up the outstanding effort!
+                        </p>
+                    </div>
+
+                    <!-- Footer Section -->
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 50px;">
+                        <!-- Date -->
+                        <div style="text-align: center; flex: 1;">
+                            <p style="font-size: 16px; font-family: 'Roboto', sans-serif; color: #555;">Date</p>
+                            <p style="font-size: 14px; font-family: 'Roboto', sans-serif; color: #1f3c88;">
+                                <t t-esc="doc.result_date"/>
+                            </p>
+                        </div>
+
+                        <!-- Award Badge (Optional) -->
+                        <div style="text-align: center; flex: 1;">
+                            <t t-if="doc.marks &lt; 80">
+                                <img src="/school_management/static/description/award_badge.png" alt="Award Badge" style="width: 80px; height: auto;" />
+                            </t>
+                            <t t-else="">
+                                <img src="/school_management/static/description/gold_badge.png" alt="Gold Badge" style="width: 80px; height: auto;" />
+                            </t>
+                        </div>
+
+                        <!-- Signature -->
+                        <div style="text-align: center; flex: 1;">
+                            <p style="font-size: 16px; font-family: 'Roboto', sans-serif; color: #555;">Donald Trump</p>
+                            <p style="font-size: 14px; font-family: 'Roboto', sans-serif; color: #555; border-top: 1px solid #000; width: 200px; margin: auto;">Principal</p>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+
+
+
+    <record id="certificate_template_action" model="ir.actions.report">
+        <field name="name">Get Certificate</field>
+        <field name="model">school_management.result</field>
+        <field name="report_type">qweb-html</field>
+        <field name="report_name">school_management.certificate_template</field>
+        <field name="report_file">school_management.certificate_template</field>
+        <field name="binding_model_id" ref="school_management.model_school_management_result"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

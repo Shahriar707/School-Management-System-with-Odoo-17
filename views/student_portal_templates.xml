@@ -1,0 +1,545 @@
+<odoo>
+
+    <template id="portal_my_student_home" inherit_id="portal.portal_my_home">
+        <xpath expr="//div[@id='portal_vendor_category']" position="inside">
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="icon" t-value="'/sale/static/src/img/bag.svg'"/>
+                <t t-set="title">Student</t>
+                <t t-set="text">All Students</t>
+                <t t-set="url" t-value="'/my/student'"/>
+                <t t-set="config_card" t-value="True"/>
+            </t>
+        </xpath>
+    </template>
+
+    <template id="portal_my_student_breadcrumbs" name="Portal layout : Student menu breadcrumbs"
+              inherit_id="portal.portal_breadcrumbs" priority="25">
+        <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+            <!-- Breadcrumb for Student List -->
+            <li t-if="page_name == 'student_list'" class="breadcrumb-item active" aria-current="page">
+                Students
+            </li>
+
+            <!-- Breadcrumb for Individual Student -->
+            <li t-if="page_name == 'student_details'" class="breadcrumb-item">
+                <a t-att-href="'/my/student'">
+                    Students
+                </a>
+            </li>
+            <li t-if="page_name == 'student_details'" class="breadcrumb-item active" aria-current="page">
+                <t t-esc="student.name"/>
+            </li>
+        </xpath>
+    </template>
+
+
+    <template id="student_list_view_template" name="Portal Student List">
+        <t t-call="portal.portal_layout">
+            <t t-set="title">Students</t>
+            <div class="container mt-5">
+                <!-- Page Title -->
+                <h1 class="text-center mb-4 text-uppercase text-primary">
+                    My Students
+                </h1>
+                <a href="/my/student/create" class="btn btn-primary mb-4">
+                    Create Students
+                </a>
+
+                <!-- Searchbar -->
+                <div class="d-flex justify-content-end mb-3">
+                    <t t-call="portal.portal_searchbar">
+                        <t t-set="search_input_placeholder" t-value="'Search students...'"/>
+                    </t>
+                </div>
+
+                <!-- Grouped Student Table -->
+                <t t-foreach="group_students" t-as="group">
+                    <!-- Group Header -->
+                    <div class="mb-4">
+                        <h3 class="text-primary border-bottom pb-2">
+                            <t t-esc="group.get(groupby, 'Uncategorized')"/>
+                        </h3>
+                    </div>
+
+                    <!-- Student Table -->
+                    <div class="table-responsive shadow-sm rounded bg-white p-4 mb-4">
+                        <table class="table table-striped">
+                            <thead class="bg-primary text-white text-center">
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Age</th>
+                                    <th>Standard</th>
+                                    <th>Gender</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="group['students']" t-as="student">
+                                    <tr class="text-center">
+                                        <td class="fw-bold text-primary">
+                                            <t t-esc="student.name"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="student.age or 'N/A'"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="student.standard or 'N/A'"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="student.gender or 'N/A'"/>
+                                        </td>
+                                        <td>
+                                            <a t-att-href="'/my/student/%s' % student.id"
+                                               class="btn btn-primary btn-sm rounded-pill px-3">
+                                                View
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </div>
+                </t>
+            </div>
+        </t>
+    </template>
+
+
+    <template id="student_details_view_template" name="Portal Student Details">
+        <t t-call="portal.portal_layout">
+            <div class="container mt-5">
+                <!-- Title -->
+                <div class="text-center mb-5">
+                    <h2 class="display-4 font-weight-bold">Student Details</h2>
+                    <p class="text-muted">Explore detailed information about the student</p>
+                </div>
+                <a t-attf-href="/my/student/print/{{student.id}}" class="fa fa-download btn btn-primary">
+                    Download
+                </a>
+                <a t-att-href="'/my/student/update/%s' % student.id" class="fa fa-edit btn btn-primary">
+                    Update
+                </a>
+
+                <!-- Card -->
+                <div class="card shadow-lg p-4">
+                    <!-- Card Header -->
+                    <div class="card-header text-center bg-primary text-white rounded-top">
+                        <h3 class="mb-0"><t t-esc="student.name" /></h3>
+                    </div>
+
+                    <!-- Card Body -->
+                    <div class="card-body">
+                        <!-- Student Details -->
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <p><strong>Age:</strong> <span class="text-muted"><t t-esc="student.age or 'N/A'" /></span></p>
+                            </div>
+                            <div class="col-md-6">
+                                <p><strong>Standard:</strong> <span class="text-muted"><t t-esc="student.standard or 'N/A'" /></span></p>
+                            </div>
+                        </div>
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <p><strong>Gender:</strong> <span class="text-muted"><t t-esc="student.gender or 'N/A'" /></span></p>
+                            </div>
+                            <div class="col-md-6">
+                                <p><strong>Admission Date:</strong> <span class="text-muted"><t t-esc="student.admission_date or 'N/A'" /></span></p>
+                            </div>
+                        </div>
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <p><strong>School:</strong> <span class="text-muted"><t t-esc="student.school_id.name or 'N/A'" /></span></p>
+                            </div>
+                            <div class="col-md-6">
+                                <p><strong>Roll Number:</strong> <span class="text-muted"><t t-esc="student.roll_number or 'N/A'" /></span></p>
+                            </div>
+                        </div>
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <p><strong>Section:</strong> <span class="text-muted"><t t-esc="student.section or 'N/A'" /></span></p>
+                            </div>
+                            <div class="col-md-6">
+                                <p><strong>Version:</strong> <span class="text-muted"><t t-esc="student.version or 'N/A'" /></span></p>
+                            </div>
+                        </div>
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <p><strong>Group:</strong> <span class="text-muted"><t t-esc="student.group or 'N/A'" /></span></p>
+                            </div>
+                            <div class="col-md-6">
+                                <p><strong>Weight (kg):</strong> <span class="text-muted"><t t-esc="student.weight_in_kg or 'N/A'" /></span></p>
+                            </div>
+                        </div>
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <p><strong>Weight (pounds):</strong> <span class="text-muted"><t t-esc="student.weight_in_pounds or 'N/A'" /></span></p>
+                            </div>
+                            <div class="col-md-6">
+                                <p><strong>Parent Name:</strong> <span class="text-muted"><t t-esc="student.parent_name or 'N/A'" /></span></p>
+                            </div>
+                        </div>
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <p><strong>Email:</strong> <span class="text-muted"><t t-esc="student.email or 'N/A'" /></span></p>
+                            </div>
+                            <div class="col-md-6">
+                                <p><strong>Related Student:</strong> <span class="text-muted"><t t-esc="student.related_student_id.name or 'N/A'" /></span></p>
+                            </div>
+                        </div>
+
+                        <!-- Student Marks -->
+                        <div class="mt-5">
+                            <h4 class="text-primary">Student Marks</h4>
+                            <div class="table-responsive">
+                                <table class="table table-striped table-hover">
+                                    <thead class="bg-primary text-white">
+                                        <tr>
+                                            <th>Course</th>
+                                            <th>Marks</th>
+                                            <th>Grade</th>
+                                            <th>Result Date</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-if="student.result_ids">
+                                            <t t-foreach="student.result_ids" t-as="result">
+                                                <tr>
+                                                    <td><t t-esc="result.course_id.name or 'N/A'" /></td>
+                                                    <td><t t-esc="result.marks or 'N/A'" /></td>
+                                                    <td><t t-esc="result.grade or 'N/A'" /></td>
+                                                    <td><t t-esc="result.result_date or 'N/A'" /></td>
+                                                </tr>
+                                            </t>
+                                        </t>
+                                        <t t-else="">
+                                            <tr>
+                                                <td colspan="4" class="text-center">No marks available.</td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Navigation -->
+                    <div class="card-footer bg-light d-flex justify-content-between">
+                        <a t-if="prev_record" t-att-href="prev_record" class="btn btn-outline-primary">
+                            « Previous Student
+                        </a>
+                        <a t-if="next_record" t-att-href="next_record" class="btn btn-outline-primary">
+                            Next Student »
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+
+    <template id="create_student_form" name="Create Student Form">
+        <t t-call="portal.portal_layout">
+            <nav aria-label="breadcrumb" class="mt-3">
+                <ol class="breadcrumb">
+                    <t t-foreach="breadcrumbs" t-as="crumb">
+                        <li t-if="crumb[1] != '#'" class="breadcrumb-item">
+                            <a t-att-href="crumb[1]"><t t-esc="crumb[0]"/></a>
+                        </li>
+                        <li t-if="crumb[1] == '#'" class="breadcrumb-item active" aria-current="page">
+                            <t t-esc="crumb[0]"/>
+                        </li>
+                    </t>
+                </ol>
+            </nav>
+            <div class="container mt-5">
+                <!-- Title -->
+                <h1 class="text-center mb-4 text-primary fw-bold">Create Student</h1>
+
+                <!-- Error Messages -->
+                <t t-if="error_list">
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong>Error(s):</strong>
+                        <ul>
+                            <t t-foreach="error_list" t-as="error">
+                                <li><t t-esc="error"/></li>
+                            </t>
+                        </ul>
+                    </div>
+                </t>
+
+                <!-- Success Messages -->
+                <t t-if="success_list">
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <ul>
+                            <t t-foreach="success_list" t-as="success">
+                                <li><t t-esc="success"/></li>
+                            </t>
+                        </ul>
+                    </div>
+                </t>
+
+                <!-- Student Creation Form -->
+                <div class="card shadow-lg p-4">
+                    <form action="/my/student/create" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+
+                        <!-- Student Name -->
+                        <div class="mb-3">
+                            <label for="name" class="form-label fw-semibold">Student Name</label>
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Enter student name" />
+                        </div>
+
+                        <!-- School Selection -->
+                        <div class="mb-3">
+                            <label for="school_id" class="form-label fw-semibold">School</label>
+                            <select class="form-select" id="school_id" name="school_id">
+                                <option value="">Select School</option>
+                                <t t-foreach="schools" t-as="school">
+                                    <option t-att-value="school.id"><t t-esc="school.name"/></option>
+                                </t>
+                            </select>
+                        </div>
+
+                        <!-- Roll Number -->
+                        <div class="mb-3">
+                            <label for="roll_number" class="form-label fw-semibold">Roll Number</label>
+                            <input type="text" class="form-control" id="roll_number" name="roll_number" placeholder="Enter roll number" />
+                        </div>
+
+                        <!-- Standard -->
+                        <div class="mb-3">
+                            <label for="standard" class="form-label fw-semibold">Standard</label>
+                            <select class="form-select" id="standard" name="standard">
+                                <option value="">Select Standard</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                            </select>
+                        </div>
+
+                        <!-- Section -->
+                        <div class="mb-3">
+                            <label for="section" class="form-label fw-semibold">Section</label>
+                            <select class="form-select" id="section" name="section">
+                                <option value="">Select Section</option>
+                                <option value="A">A</option>
+                                <option value="B">B</option>
+                                <option value="C">C</option>
+                                <option value="D">D</option>
+                                <option value="E">E</option>
+                                <option value="F">F</option>
+                            </select>
+                        </div>
+
+                        <!-- Email -->
+                        <div class="mb-3">
+                            <label for="email" class="form-label fw-semibold">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Enter email" />
+                        </div>
+
+                        <!-- Group -->
+                        <div class="mb-3">
+                            <label for="group" class="form-label fw-semibold">Group</label>
+                            <select class="form-select" id="group" name="group">
+                                <option value="">Select Group</option>
+                                <option value="Science">Science</option>
+                                <option value="Commerce">Commerce</option>
+                                <option value="Arts">Arts</option>
+                            </select>
+                        </div>
+
+                        <!-- Parent Selection -->
+                        <div class="mb-3">
+                            <label for="parent_id" class="form-label fw-semibold">Parent</label>
+                            <select class="form-select" id="parent_id" name="parent_id">
+                                <option value="">Select Parent</option>
+                                <t t-foreach="parents" t-as="parent">
+                                    <option t-att-value="parent.id"><t t-esc="parent.name"/></option>
+                                </t>
+                            </select>
+                        </div>
+
+                        <!-- Admission Date -->
+                        <div class="mb-3">
+                            <label for="admission_date" class="form-label fw-semibold">Admission Date</label>
+                            <input type="date" class="form-control" id="admission_date" name="admission_date"/>
+                        </div>
+
+                        <!-- Image -->
+                        <div class="mb-3">
+                            <label for="image" class="form-label fw-semibold">Student Image</label>
+                            <input type="file" class="form-control" id="image" name="image"/>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary btn-lg px-5">Create Student</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </t>
+    </template>
+
+
+    <template id="update_student_form" name="Update Student Form">
+        <t t-call="portal.portal_layout">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <t t-foreach="breadcrumbs" t-as="crumb">
+                        <li t-if="crumb[1] != '#'" class="breadcrumb-item">
+                            <a t-att-href="crumb[1]"><t t-esc="crumb[0]"/></a>
+                        </li>
+                        <li t-if="crumb[1] == '#'" class="breadcrumb-item active" aria-current="page">
+                            <t t-esc="crumb[0]"/>
+                        </li>
+                    </t>
+                </ol>
+            </nav>
+            <div class="container mt-5">
+                <!-- Title -->
+                <h1 class="text-center mb-4 text-primary">Update Student</h1>
+
+                <!-- Error Messages -->
+                <t t-if="error_list">
+                    <div class="alert alert-danger" role="alert">
+                        <strong>Error(s):</strong>
+                        <ul>
+                            <t t-foreach="error_list" t-as="error">
+                                <li><t t-esc="error"/></li>
+                            </t>
+                        </ul>
+                    </div>
+                </t>
+
+                <!-- Success Messages -->
+                <t t-if="success_list">
+                    <div class="alert alert-success" role="alert">
+                        <ul>
+                            <t t-foreach="success_list" t-as="success">
+                                <li><t t-esc="success"/></li>
+                            </t>
+                        </ul>
+                    </div>
+                </t>
+
+                <!-- Student Update Form -->
+                <form t-att-action="'/my/student/update/%s' % student.id" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+
+                    <!-- Student Name -->
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Student Name</label>
+                        <input type="text" class="form-control" id="name" name="name" t-att-value="student.name" />
+                    </div>
+
+                    <!-- School Selection -->
+                    <div class="mb-3">
+                        <label for="school_id" class="form-label">School</label>
+                        <select class="form-select" id="school_id" name="school_id">
+                            <option value="">Select School</option>
+                            <t t-foreach="schools" t-as="school">
+                                <option t-att-value="school.id" t-att-selected="student.school_id.id == school.id">
+                                    <t t-esc="school.name"/>
+                                </option>
+                            </t>
+                        </select>
+                    </div>
+
+                    <!-- Roll Number -->
+                    <div class="mb-3">
+                        <label for="roll_number" class="form-label">Roll Number</label>
+                        <input type="text" class="form-control" id="roll_number" name="roll_number"
+                               t-att-value="student.roll_number" />
+                    </div>
+
+                    <!-- Standard -->
+                    <div class="mb-3">
+                        <label for="standard" class="form-label">Standard</label>
+                        <select class="form-select" id="standard" name="standard">
+                            <option value="">Select Standard</option>
+                            <t t-foreach="['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']" t-as="std">
+                                <option t-att-value="std" t-att-selected="student.standard == std">
+                                    <t t-esc="std"/>
+                                </option>
+                            </t>
+                        </select>
+                    </div>
+
+                    <!-- Section -->
+                    <div class="mb-3">
+                        <label for="section" class="form-label">Section</label>
+                        <select class="form-select" id="section" name="section">
+                            <option value="">Select Section</option>
+                            <t t-foreach="['A', 'B', 'C', 'D', 'E', 'F']" t-as="sec">
+                                <option t-att-value="sec" t-att-selected="student.section == sec">
+                                    <t t-esc="sec"/>
+                                </option>
+                            </t>
+                        </select>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" name="email"
+                               t-att-value="student.email" />
+                    </div>
+
+                    <!-- Group -->
+                    <div class="mb-3">
+                        <label for="group" class="form-label">Group</label>
+                        <select class="form-select" id="group" name="group">
+                            <option value="">Select Group</option>
+                            <t t-foreach="['Science', 'Commerce', 'Arts']" t-as="grp">
+                                <option t-att-value="grp" t-att-selected="student.group == grp">
+                                    <t t-esc="grp"/>
+                                </option>
+                            </t>
+                        </select>
+                    </div>
+
+                    <!-- Parent Selection -->
+                    <div class="mb-3">
+                        <label for="parent_id" class="form-label">Parent</label>
+                        <select class="form-select" id="parent_id" name="parent_id">
+                            <option value="">Select Parent</option>
+                            <t t-foreach="parents" t-as="parent">
+                                <option t-att-value="parent.id" t-att-selected="student.parent_id.id == parent.id">
+                                    <t t-esc="parent.name"/>
+                                </option>
+                            </t>
+                        </select>
+                    </div>
+
+                    <!-- Admission Date -->
+                    <div class="mb-3">
+                        <label for="admission_date" class="form-label">Admission Date</label>
+                        <input type="date" class="form-control" id="admission_date" name="admission_date"
+                               t-att-value="student.admission_date" />
+                    </div>
+
+                    <!-- Image -->
+                    <div class="mb-3">
+                        <label for="image" class="form-label">Student Image</label>
+                        <input type="file" class="form-control" id="image" name="image" />
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary px-4">Update Student</button>
+                    </div>
+                </form>
+            </div>
+        </t>
+    </template>
+
+
+</odoo>
